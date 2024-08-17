@@ -1,0 +1,32 @@
+
+ .footer li
+{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+} 
+.footer span{
+    font-family: Poppins;
+    font-weight: 500;
+    font-size: 1.5rem;
+}
+ .image_option{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 5% 0 1% 0;
+ }
+.elements{
+
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    justify-content: center;
+}
+.social-media-image
+{
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}

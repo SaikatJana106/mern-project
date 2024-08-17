@@ -1,0 +1,31 @@
+.relatedproduct-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4rem;
+    border-bottom: 2px solid black;
+    font-weight: 500;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    padding: 10px;
+  }
+  .related-container
+  {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  
+  /* Media query for smaller screens */
+  @media (max-width: 768px) {
+    .relatedproduct-text {
+      font-size: 2.5rem; /* Adjust font size for mobile */
+      flex-direction: column; /* Stack text vertically if needed */
+      text-align: center; /* Center text alignment */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .relatedproduct-text {
+      font-size: 2rem; /* Further reduce font size for very small screens */
+    }
+  }
+  
