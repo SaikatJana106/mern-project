@@ -91,7 +91,7 @@
 .nav-count {
     font-weight: bold;
     color:black;
-    margin-left: 8rem;
+    margin-left: 7.5rem;
     position: relative;
    bottom: 2.3rem; /* Adjusts the vertical position of the item count */
    text-decoration: none;
