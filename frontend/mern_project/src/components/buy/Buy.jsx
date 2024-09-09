@@ -45,7 +45,7 @@ const Buy = () => {
           {/* Wrap product name and price in the same div for alignment */}
           <div className="product-details">
             <p>{product.name}</p>
-            <p>${product.price}</p>
+            <p>${product.price}{product.new_price}</p>
           </div>
 
           <div className="payment-method">

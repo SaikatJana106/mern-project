@@ -34,7 +34,7 @@ const Order = () => {
           <div key={index} className="order-item">
             <img src={order.image} alt={order.name} />
             <p>Name: {order.name || 'Name not available'}</p>
-            <p>New Price: {order.new_price !== undefined ? order.old_price : 'New price not available'}</p>
+            <p>Price: {order.new_price || order.price}</p>
           </div>
         ))
       ) : (

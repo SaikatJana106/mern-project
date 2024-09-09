@@ -21,7 +21,7 @@ const Iteam = (props) => {
           <Card.Title>{props.title}</Card.Title>
           <Card.Text>{props.name}</Card.Text>
           <Card.Text>$ {props.price}</Card.Text>
-          <Button variant="primary" onClick={handleBuy}>Buy</Button>
+          <Button  onClick={handleBuy} className='btn'>Buy</Button>
         </Card.Body>
       </Card>
       
