@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import './iteam.css';
-
+// taking props from collection.jsx file 
 const Iteam = (props) => {
   const navigate = useNavigate();
 
@@ -18,9 +18,9 @@ const Iteam = (props) => {
           <Card.Img onClick={() => window.scrollTo(0, 0)} variant="top" src={props.image} />
         </Link>
         <Card.Body>
-          <Card.Title>{props.title}</Card.Title>
           <Card.Text>{props.name}</Card.Text>
-          <Card.Text>$ {props.price}</Card.Text>
+          <Card.Text className='oldprice'>${props.old_price}</Card.Text>
+          <Card.Text className='newprice '>$ {props.price}</Card.Text>
           <Button  onClick={handleBuy} className='btn'>Buy</Button>
         </Card.Body>
       </Card>

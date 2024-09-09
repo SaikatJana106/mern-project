@@ -26,6 +26,7 @@ const Collection = () => {
             name={item.name}
             image={item.image}
             price={item.new_price}
+            old_price={item.old_price}
           />
         ))}
       </div>

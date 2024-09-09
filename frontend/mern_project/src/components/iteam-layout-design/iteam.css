@@ -9,5 +9,13 @@
   background-color: #ff4500;
   border: none;
  }
- 
+ .oldprice {
+  text-decoration: line-through;
+  color: #777;
+}
+
+.newprice {
+  font-size: 24px;
+  color: #222;
+}
   
