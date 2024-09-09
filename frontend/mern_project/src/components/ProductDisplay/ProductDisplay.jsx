@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { ShopContext } from '../shpocontext/ShopContext';
 import { useNavigate } from 'react-router-dom';
 import './Productdisplay.css';
+import Populer from '../populer/Populer';
 
 const ProductDisplay = ({ product }) => {
   if (!product) {
@@ -43,7 +44,7 @@ const ProductDisplay = ({ product }) => {
             <div className="newprice">${product.new_price}</div>
           </div>
           <div className="description">
-            hi it is a good product
+            Best selling product 
           </div>
           <div className="size">
             <h1>Select Size</h1>
@@ -59,6 +60,7 @@ const ProductDisplay = ({ product }) => {
           <button onClick={handleBuy}>BUY</button>
         </div>
       </div>
+      <Populer/>
     </>
   );
 };

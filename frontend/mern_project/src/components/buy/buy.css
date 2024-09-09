@@ -1,0 +1,145 @@
+/* buy.css */
+
+/* General styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  .buy-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 600px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .buy-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .product-details {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 20px;
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  .payment-method {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 20px 0;
+  }
+  
+  .payment-method label {
+    margin-right: 20px;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .payment-method input[type="radio"] {
+    margin-right: 5px;
+  }
+  
+  .orderplacebtn {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .orderplacebtn button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .orderplacebtn button:hover {
+    background-color: #218838;
+  }
+  
+  /* Responsive Styling */
+  
+  /* For tablets and larger screens */
+  @media (min-width: 768px) {
+    .buy-item {
+      padding: 40px;
+      width: fit-content;
+    }
+  
+    .buy-item img {
+      width: 50%;
+      margin-right: 30px;
+    }
+  
+    .product-details {
+      font-size: 1.4rem;
+    }
+  
+    .orderplacebtn button {
+      padding: 15px 30px;
+      font-size: 1.1rem;
+    }
+  }
+  
+  /* For small devices */
+  @media (max-width: 767px) {
+    .buy-item {
+      width: 90%;
+    }
+  
+    .buy-item p {
+      font-size: 1rem;
+    }
+  
+    .orderplacebtn button {
+      width: 100%;
+      font-size: 1rem;
+      padding: 10px;
+    }
+  }
+  
+  /* For very small mobile devices */
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 1.5rem;
+    }
+  
+    .product-details {
+      font-size: 0.9rem;
+    }
+  
+    .payment-method label {
+      font-size: 0.9rem;
+    }
+  
+    .orderplacebtn button {
+      padding: 8px;
+      font-size: 0.9rem;
+    }
+  }
+  

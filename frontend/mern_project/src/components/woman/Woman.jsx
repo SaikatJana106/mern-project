@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import Iteam from '../iteam-layout-design/Iteam';
 import Image from 'react-bootstrap/Image';
 import './woman.css';
+import Relatedproduct from '../relatedproduct/Relatedproduct';
 
 const Woman = () => {
   const [womenProducts, setWomenProducts] = useState([]);
 
   useEffect(() => {
     // Fetch women's products directly from the server
-    fetch('http://localhost:4000/allproducts?category=women')
+    fetch('http://localhost:4000/filterproduct?category=women')
       .then((response) => response.json())
       .then((data) => setWomenProducts(data))
       .catch((error) => console.error("Error fetching women's products:", error));
@@ -32,6 +33,7 @@ const Woman = () => {
           />
         ))}
       </div>
+      <Relatedproduct category="women" />
 
     </>
   );

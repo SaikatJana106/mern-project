@@ -24,6 +24,7 @@ const Iteam = (props) => {
           <Button variant="primary" onClick={handleBuy}>Buy</Button>
         </Card.Body>
       </Card>
+      
     </>
   );
 };

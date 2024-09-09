@@ -1,16 +1,26 @@
-import React from 'react'
-import data from '../../pic/Ecommerce_Assets/Assets/Frontend_Assets/data';
+import React, { useEffect, useState } from 'react';
 import Iteam from '../iteam-layout-design/Iteam';
-import'./relatedProduct.css'
-const Relatedproduct = () => {
+import './relatedProduct.css';
+
+const Relatedproduct = ({ category }) => {
+  const [relatedProduct, setRelatedProduct] = useState([]);
+  const defaultCategory = "men";
+  const categoryToFetch = category || defaultCategory;
+
+  useEffect(() => {
+    fetch(`http://localhost:4000/relatedproduct?category=${categoryToFetch}`)
+      .then((response) => response.json())
+      .then((data) => setRelatedProduct(data))
+      .catch((error) => console.error('Error fetching products:', error));
+  }, [categoryToFetch]);  // Include category as a dependency
+
   return (
     <>
       <div className="relatedproduct-text">
-        <h1>Related Products</h1>
+        <h1>Related Products for {categoryToFetch}</h1>
       </div>
-      <div className='related-container '>
-
-        {data.map((item, index) => (
+      <div className='related-container'>
+        {relatedProduct.map((item, index) => (
           <Iteam
             key={index}
             id={item.id}
@@ -21,7 +31,7 @@ const Relatedproduct = () => {
         ))}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Relatedproduct
+export default Relatedproduct;

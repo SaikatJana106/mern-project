@@ -32,7 +32,7 @@ if (!fs.existsSync(uploadDir)) {
 // Multer setup for file storage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './upload/images');
+    cb(null, 'upload/images'); // Ensure 'upload/images' is the correct directory path
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -46,13 +46,19 @@ const upload = multer({ storage: storage });
 app.use('/images', express.static('upload/images'));
 
 // File upload route
-app.post("/upload", upload.single('product'), (req, res) => {
+app.use('/images', express.static('upload/images'));
+
+app.post('/upload', upload.single('image'), (req, res) => { // Ensure 'image' matches the name attribute in your client form
   if (!req.file) {
     return res.status(400).send('No file uploaded.');
   }
   console.log(req.file, req.body);
-  res.send("File uploaded successfully");
+  res.json({
+    success: 1,
+    image_url: `http://localhost:${port}/images/${req.file.filename}`
+  });
 });
+
 
 
 // Basic route
@@ -103,18 +109,12 @@ const productSchema = new mongoose.Schema({
 // Create a model
 const Product = mongoose.model('Product', productSchema);
 
-// Route to add a product
-app.post('/addproduct', async (req, res) => {
-  let products = await Product.find({});
-  let id;
-  if (products.length > 0) {
-    let last_product = products[products.length - 1];
-    id = last_product.id + 1;
-  } else {
-    id = 1;
-  }
+
+app.post('/addproduct', upload.single('image'), async (req, res) => {
+
   const product = new Product({
-    id: id,
+    id:req.body. id,
+    image: req.file ? req.file.path : '', 
     name: req.body.name,
     image: req.body.image,
     category: req.body.category,
@@ -122,24 +122,41 @@ app.post('/addproduct', async (req, res) => {
     old_price: req.body.old_price,
   });
 
-  try {
-    await product.save();
-    console.log("Product saved");
-    res.json({
-      success: true,
-      name: req.body.name,
-    });
-  } catch (error) {
-    console.error("Error saving product:", error);
-    res.status(500).send("Internal Server Error");
-  }
-});
 
+  await product.save();
+  console.log("Product saved");
+  res.json({
+    success: true,
+    name: req.body.name,
+  })
+
+
+}); 
 
 // API for getting all products
 app.get('/allproducts', async (req, res) => {
   try {
-    let products = await Product.find({});
+    let allproduct = await Product.find({});
+    console.log("All products fetched");
+    const products = await Product.aggregate([
+      { $sample: {size:allproduct.length } }        // Randomly sample items
+    ]);
+    res.send(products);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Assuming you have an 'category' field in your Product model
+app.get('/filterproduct', async (req, res) => {
+  try {
+    const category = req.query.category;
+    let query = {};
+    if (category) {
+      query.category = category; // Filter by category
+    }
+    let products = await Product.find(query);
     console.log("All products fetched");
     res.send(products);
   } catch (error) {
@@ -148,19 +165,47 @@ app.get('/allproducts', async (req, res) => {
   }
 });
 
-app.post('/removeproduct', async (req, res) => {
+
+//related product field
+app.get('/relatedproduct', async (req, res) => {
   try {
-    await Product.findOneAndDelete({ id: req.body.id });
-    console.log("Removed");
-    res.json({
-      success: true,
-      name: req.body.name
-    });
+    const category = req.query.category;
+    let query = {}; // Only fetch products where 'populer' is true
+
+    // If a category is provided, include it in the query
+    if (category) {
+      query.category = category; 
+    }
+
+    // Fetch 4 random popular items from the database
+    const populerItems = await Product.aggregate([
+      { $match: query },                // Match documents where 'populer' is true and category (if provided)
+      { $sample: { size: 4 } }          // Randomly sample 4 items
+    ]);
+
+    res.send(populerItems);
   } catch (error) {
-    console.error("Error removing product:", error);
-    res.status(500).send("Internal Server Error");
+    console.error("Error fetching popular items:", error);
+    res.status(500).send({ error: "Error fetching popular items" });
   }
 });
+
+
+//for remove product
+// app.post('/removeproduct', async (req, res) => {
+//   try {
+//     await Product.findOneAndDelete({ id: req.body.id });
+//     console.log("Removed");
+//     res.json({
+//       success: true,
+//       name: req.body.name
+//     });
+//   } catch (error) {
+//     console.error("Error removing product:", error);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
+
 
 // User schema definition
 const userSchema = new mongoose.Schema({
@@ -197,10 +242,12 @@ const userSchema = new mongoose.Schema({
 
   },
   cartData: {
-    type: Object,
+    type: Array,
+    default: [],
   },
   buyData: {
-    type: Object,
+    type: Array,
+    default: [],
   },
   paymentType: {
     type: String,
@@ -228,7 +275,7 @@ userSchema.pre('save', async function (next) {
 // Create a User model
 const User = mongoose.model('User', userSchema);
 
-// User registration route
+// User signup 
 app.post('/signup', async (req, res) => {
   let check = await User.findOne({ email: req.body.email });
   if (check) {
@@ -292,17 +339,13 @@ app.post('/login', async (req, res) => {
   }
 })
 
-//populer
+//display populer item
 app.get('/populer', async (req, res) => {
-  const { category } = req.query;
-  const query = { populer: true };  // Changed string "true" to boolean true
-
-  if (category) {
-    query.category = category;
-  }
-
   try {
-    const populerItems = await Product.find(query); // Corrected 'Products' to 'Product'
+    const populerItems = await Product.aggregate([
+      { $match: { populer: true } }, // Match documents with 'populer' set to true
+      { $sample: { size: 4 } }        // Randomly sample 4 items
+    ]);
     res.send(populerItems);
   } catch (error) {
     console.error("Error fetching popular items:", error);
@@ -312,15 +355,12 @@ app.get('/populer', async (req, res) => {
 
 
 
-// cart
-
-
 // Middleware to authenticate and fetch user
 const fetchuser = (req, res, next) => {
   // Get the token from the request header
   const token = req.header('authToken');
   if (!token) {
-    return res.status(401).send({ error: "Please authenticate with a valid token" });
+    return res.status(401).json({ error: "Please authenticate with a valid token" });
   }
   try {
     // Verify the token using the secret key
@@ -328,14 +368,11 @@ const fetchuser = (req, res, next) => {
     req.user = data.user;
     next();
   } catch (error) {
-    res.status(401).send({ error: "Please authenticate with a valid token" });
+    res.status(401).json({ error: "Invalid token, authentication failed" });
   }
 };
 
 
-
-
-// Make sure to define fetchuser before using it in routes
 
 // Route to get user's cart
 app.post('/getcart', fetchuser, async (req, res) => {
@@ -348,6 +385,7 @@ app.post('/getcart', fetchuser, async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
 // Add a route to update the user's cart
 app.post('/updatecart', fetchuser, async (req, res) => {
   try {
@@ -361,29 +399,53 @@ app.post('/updatecart', fetchuser, async (req, res) => {
 });
 
 // Add a route to save the user's order
+// Save order to databse
 app.post('/saveorder', fetchuser, async (req, res) => {
   try {
     const { orderData, paymentType } = req.body;
-    await User.findByIdAndUpdate(req.user.id, { buyData: orderData, paymentType });
-    res.json({ success: true });
+
+    // Fetch the current user's buyData
+    const user = await User.findById(req.user.id);
+
+    if (user) {
+      // Append the new order to the existing buyData array
+      const updatedBuyData = [...user.buyData, orderData];
+
+      // Update the user's buyData and paymentType in the database
+      await User.findByIdAndUpdate(req.user.id, { buyData: updatedBuyData, paymentType });
+
+      res.json({ success: true });
+    } else {
+      res.status(404).send("User not found");
+    }
   } catch (error) {
     console.error("Error saving order data:", error);
     res.status(500).send("Internal Server Error");
   }
 });
 
+
+
 // Add a route to fetch the user's order
-app.post('/getorder', fetchuser, async (req, res) => {
+app.get('/getorder', fetchuser, async (req, res) => {
   try {
-    let user = await User.findById(req.user.id);
-    res.json(user.buyData);
+    const user = await User.findById(req.user.id);
+    if (user && user.buyData) {
+      res.json(user.buyData); // Send back the array of orders
+    } else {
+      res.status(404).send("No orders found");
+    }
   } catch (error) {
     console.error("Error fetching order data:", error);
     res.status(500).send("Internal Server Error");
   }
 });
 
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+
+
+

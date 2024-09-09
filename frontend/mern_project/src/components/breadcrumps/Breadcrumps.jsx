@@ -8,7 +8,7 @@ const Breadcrumps = ({ product }) => {
 
   return (
     <div className="breadcrum">
-      Home <img src="" alt="" /> Shop <img src="" alt="" /> {product.category} <img src="" alt="" /> {product.name}
+      Home <img src="" alt="" /> {">"} {">"}Shop <img src="" alt="" />{">"}{">"} {product.category} {">"}<img src="" alt="" />{">"} {product.name}
     </div>
   );
 };

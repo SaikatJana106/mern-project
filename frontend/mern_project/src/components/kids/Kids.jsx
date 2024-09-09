@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import Iteam from '../iteam-layout-design/Iteam';
 import Image from 'react-bootstrap/Image';
 import './kids.css';
+import Relatedproduct from '../relatedproduct/Relatedproduct';
 
 const Kids = () => {
   const [kidsProducts, setKidsProducts] = useState([]);
 
   useEffect(() => {
     // Fetch kids' products directly from the server
-    fetch('http://localhost:4000/allproducts?category=kid')
+    fetch('http://localhost:4000/filterproduct?category=kid')
       .then((response) => response.json())
       .then((data) => setKidsProducts(data))
       .catch((error) => console.error("Error fetching kids' products:", error));
@@ -35,6 +36,7 @@ const Kids = () => {
       <div className="seeMoreBtn">
         <button>See more</button>
       </div>
+      <Relatedproduct category="kid" />
     </>
   );
 }

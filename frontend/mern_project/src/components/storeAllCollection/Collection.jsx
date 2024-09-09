@@ -14,17 +14,22 @@ const Collection = () => {
   }, []);
 
   return (
-    <div className="all-collection">
-      {products.map((item, index) => (
-        <Iteam
-          key={index}
-          id={item.id}
-          name={item.name}
-          image={item.image}
-          price={item.new_price}
-        />
-      ))}
-    </div>
+    <>
+      <p className='iteam'>
+        <span>Showing {products.length} {">"}out of {products.length} {">"}products</span>
+      </p>
+      <div className="all-collection">
+        {products.map((item, index) => (
+          <Iteam
+            key={index}
+            id={item.id}
+            name={item.name}
+            image={item.image}
+            price={item.new_price}
+          />
+        ))}
+      </div>
+    </>
   );
 };
 

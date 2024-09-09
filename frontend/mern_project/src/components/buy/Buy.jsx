@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import './buy.css';
 
 const Buy = () => {
@@ -11,15 +10,28 @@ const Buy = () => {
 
   const handleOrder = async () => {
     try {
-      await axios.post('/saveorder', {
-        orderData: { product },
-        paymentType
-      }, {
-        headers: { 'authToken': localStorage.getItem('token') }
+      const response = await fetch('http://localhost:4000/saveorder', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'authToken': localStorage.getItem('authToken'),
+        },
+        body: JSON.stringify({
+          orderData: product,
+          paymentType: paymentType,
+        }),
       });
-      // Navigate to order confirmation or other page
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Server error: ${errorText}`);
+      }
+
+      const result = await response.json();
+      console.log('Order saved successfully:', result);
+      navigate('/Order');
     } catch (error) {
-      console.error("Error saving order:", error);
+      console.error('Error saving order:', error);
     }
   };
 
@@ -29,28 +41,36 @@ const Buy = () => {
       {product ? (
         <div className="buy-item">
           <img src={product.image} alt={product.name} />
-          <p>{product.name}</p>
-          <p>${product.price}</p>
+          
+          {/* Wrap product name and price in the same div for alignment */}
+          <div className="product-details">
+            <p>{product.name}</p>
+            <p>${product.price}</p>
+          </div>
+
           <div className="payment-method">
             <label>
               <input
-                type='radio'
-                name='payType'
+                type="radio"
+                name="payType"
                 value="cash"
                 checked={paymentType === 'cash'}
                 onChange={() => setPaymentType('cash')}
-              /> Cash
+              /> 
+              Cash
             </label>
             <label>
               <input
                 type="radio"
-                name='payType'
+                name="payType"
                 value="online"
                 checked={paymentType === 'online'}
                 onChange={() => setPaymentType('online')}
-              /> Online
+              /> 
+              Online
             </label>
           </div>
+          
           <div className="orderplacebtn">
             <button onClick={handleOrder}>Order</button>
           </div>

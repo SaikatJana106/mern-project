@@ -27,16 +27,12 @@ const Populer = ({ activeSection }) => {
     fetchData();
   }, [activeSection]);
 
-  const sectionLabels = {
-    women: 'Popular Among Women',
-    men: 'Popular Among Men',
-    kids: 'Popular Among Kids',
-  };
+ 
 
   return (
     <>
       <div className="populer-eoman-text">
-        <p>{sectionLabels[activeSection]}</p>
+        <p>Populer items</p>
       </div>
       <div className="populer-container">
         {populerProducts.map((item, index) => (

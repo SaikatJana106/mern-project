@@ -49,7 +49,7 @@ const CartItems = () => {
         }
         return null;
       })}
-      <div className="cartitems-down">
+      {/* <div className="cartitems-down">
         <div className="cartitems-total">
           <h1>Cart Totals</h1>
           <div>
@@ -70,7 +70,7 @@ const CartItems = () => {
           </div>
           <button onClick={handleBuy}>Buy</button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
