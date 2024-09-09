@@ -46,7 +46,7 @@ const Navigation = () => {
           <Link to="/kids" onClick={() => setActiveSection('kids')}>Kids</Link>
         </li>
         <li className={activeSection === 'order' ? 'active' : ''}>
-          <Link to="/order" onClick={() => setActiveSection('order')}>Orders</Link>
+          <Link to="/order" >Orders</Link>
         </li>
       </ul>
       
