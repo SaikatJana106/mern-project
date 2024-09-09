@@ -17,10 +17,10 @@ const Kids = () => {
 
   return (
     <>
-      <Image src="../../../src/pic/kk.png" className='posterimg' fluid />
+      <Image src="../../../src/pic/banner_kids.png" className='posterimg' fluid />
       <div className="iteam"></div>
       <p className='iteam'>
-        <span>Showing {kidsProducts.length} out of {kidsProducts.length} products</span>
+        <span>Showing {kidsProducts.length} {">"}  out of {kidsProducts.length} {">"}  products</span>
       </p>
       <div className="all-collection">
         {kidsProducts.map((item, index) => (

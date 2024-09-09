@@ -17,10 +17,10 @@ const Woman = () => {
 
   return (
     <>
-      <Image src="../../../src/pic/kk.png" className='posterimg' fluid />
+      <Image src="../../../src/pic/banner_women.png" className='posterimg' fluid />
       <div className="iteam"></div>
       <p className='iteam'>
-        <span>Showing {womenProducts.length} out of {womenProducts.length} products</span>
+        <span>Showing {womenProducts.length} {">"}  out of {womenProducts.length} {">"}  products</span>
       </p>
       <div className="all-collection">
         {womenProducts.map((item, index) => (

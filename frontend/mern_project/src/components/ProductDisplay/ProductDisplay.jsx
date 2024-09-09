@@ -32,11 +32,11 @@ const ProductDisplay = ({ product }) => {
         <div className="productDisplayright">
           <h1>{product.name}</h1>
           <div className="product-star">
-            <img src="../../../src/pic/Ecommerce_Assets/Assets/Frontend_Assets/star_icon.png" alt="" />
-            <img src="../../../../src/pic/Ecommerce_Assets/Assets/Frontend_Assets/star_icon.png" alt="" />
-            <img src="../../../../src/pic/Ecommerce_Assets/Assets/Frontend_Assets/star_icon.png" alt="" />
-            <img src="../../../../src/pic/Ecommerce_Assets/Assets/Frontend_Assets/star_icon.png" alt="" />
-            <img src="../../../src/pic/Ecommerce_Assets/Assets/Frontend_Assets/star_dull_icon.png" alt="" />
+            <img src="../../../src/pic/star_icon.png" alt="" />
+            <img src="../../../../src/pic/star_icon.png" alt="" />
+            <img src="../../../../src/pic/star_icon.png" alt="" />
+            <img src="../../../../src/pic/star_icon.png" alt="" />
+            <img src="../../../src/pic/star_dull_icon.png" alt="" />
             <span>(122)</span>
           </div>
           <div className="product-diplay-right-prices">

@@ -3,7 +3,7 @@ import Iteam from '../iteam-layout-design/Iteam';
 import "./men.css";
 import Image from 'react-bootstrap/Image';
 import Relatedproduct from '../relatedproduct/Relatedproduct';
-import kkImage from '../../../src/pic/kk.png'; // Importing image directly
+import kkImage from '../../../src/pic/banner_mens.png'; // Importing image directly
 
 const Men = () => {
   const [menProducts, setMenProducts] = useState([]);
@@ -23,7 +23,7 @@ const Men = () => {
       
       <div className="iteam"></div>
       <p className='iteam'>
-        <span>Showing {menProducts.length} out of {menProducts.length} products</span>
+        <span>Showing {menProducts.length} {">"} out of {menProducts.length} {">"} products</span>
       </p>
 
       <div className="all-collection">

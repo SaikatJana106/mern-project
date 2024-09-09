@@ -24,7 +24,7 @@ const Navigation = () => {
     <div className="navbar">
       
       <div className="nav-logo">
-        <img src="../../../src/pic/Ecommerce_Assets/Assets/Frontend_Assets/logo.png" alt="Logo" />
+        <img src="../../../src/pic/logo.png" alt="Logo" />
         <p>Shoppi</p>
       </div>
       <div className="hamburger-menu" onClick={toggleMobileMenu}>
@@ -59,7 +59,7 @@ const Navigation = () => {
           <button onClick={handleLogin}>Login</button>
         )}
         <Link to="/cart">
-          <img src="../../../src/pic/Ecommerce_Assets/Assets/Frontend_Assets/cart_icon.png" alt="Cart Icon" />
+          <img src="../../../src/pic/cart_icon.png" alt="Cart Icon" />
           <div className="nav-count">{totalCartItems}</div> {/* Display dynamic cart item count */}
         </Link>
       </div>

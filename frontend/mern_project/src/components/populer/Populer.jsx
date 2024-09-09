@@ -41,6 +41,7 @@ const Populer = ({ activeSection }) => {
             id={item.id}
             name={item.name}
             image={item.image}
+            old_price={item.old_price}
             price={item.new_price}
           />
         ))}
