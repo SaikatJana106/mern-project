@@ -117,7 +117,7 @@ const LoginSignup = () => {
                                 <Form.Group as={Col} controlId="formPhoneNumber">
                                     <Form.Label>Phone Number</Form.Label>
                                     <Form.Control
-                                        type="tel" // Changed to `tel` for phone input
+                                        type="tel" //  `tel` for phone input
                                         placeholder="Enter Phone No"
                                         name="phoneNumber"
                                         value={formData.phoneNumber}
